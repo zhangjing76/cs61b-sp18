@@ -1,8 +1,8 @@
 public class ClassNameHere {
-   public static void main(String[] args) {
+   public static void drawTriangle(int m) {
       int x = 1;
       int y = 0;
-      while (x < 6) {
+      while (x < m) {
         y = 0;
         while (y < x) {
             System.out.print("*");
@@ -12,4 +12,7 @@ public class ClassNameHere {
         x = x + 1;
       } 
    }
-}
+   public static void main(String[] args) {
+      drawTriangle(10);
+      } 
+   }
