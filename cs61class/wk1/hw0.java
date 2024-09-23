@@ -1,4 +1,4 @@
-public class ClassNameHere {
+public class drawTriangle {
    public static void drawTriangle(int m) {
       int x = 1;
       int y = 0;
