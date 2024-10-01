@@ -9,7 +9,7 @@ public class DebugExercise3 {
             String foodType = in.readString();
             double cost = in.readDouble();
             int numAvailable = in.readInt();
-            if (foodType.equals("turnip")) {
+            if (foodType.equals("turnip") && numAvailable >= 0) { //check if its a positive amount of turnips
                 int newTotal = totalTurnips + numAvailable;
                 totalTurnips = newTotal;
             }
