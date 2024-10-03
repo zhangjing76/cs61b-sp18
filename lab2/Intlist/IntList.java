@@ -88,6 +88,9 @@ public class IntList {
         else if (B == null && A != null) { //only A has stuff
             return A;
         }
+        else if (B == null && A == null) {
+            return null;
+        }
         IntList last = A;
         while (last.rest != null) {
             last = last.rest;
@@ -102,14 +105,14 @@ public class IntList {
      */
     public static IntList catenate(IntList A, IntList B) {
         //TODO:  fill in method
-        if (A == null && B == null) {
-            return null;
+        if (A == null && B != null) { //only b has stuff in it
+            return B;
         }
-        else if (A == null && B != null) {
+        else if (B == null && A != null) { //only A has stuff
             return A;
         }
-        else if (B == null && A != null) {
-            return B;
+        else if (B == null && A == null) {
+            return null;
         }
         IntList myList = IntList.of(A.first);
         IntList ptr = myList;
