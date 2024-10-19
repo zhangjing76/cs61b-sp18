@@ -70,7 +70,7 @@ public class NBody {
 
         double[] xForces= new double[Planets.length];
         double[] yForces = new double[Planets.length];
-        for (int time = 0; time <= T; time = time + 10) {
+        for (double time = 0; time <= T; time = time + dt) {
             for(int i = 0; i < Planets.length; i++) {
                 yForces[i] = Planets[i].calcNetForceExertedByY(Planets);
                 xForces[i] = Planets[i].calcNetForceExertedByX(Planets);
@@ -79,10 +79,13 @@ public class NBody {
             for(int i = 0; i < Planets.length; i++) {
                 Planets[i].update(time, xForces[i], yForces[i]);
             }
-            StdDraw.picture((R/2), (R/2), "images/starfield.jpg");
+
+            //drawing background and all planets
+            StdDraw.picture(R/2, R/2, "images/starfield.jpg");
             for(int i = 0; i < Planets.length; i++) {
                 Planets[i].draw();
             }
+
             StdDraw.show();
             StdDraw.pause(10);
         }
