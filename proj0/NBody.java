@@ -20,6 +20,7 @@ public class NBody {
         return R;
     }
 
+    /**reads amount of planets*/
     public static Planet[] readPlanets(String filename) {
         In in = new In(filename);
 
@@ -48,15 +49,20 @@ public class NBody {
         }
         return Planets;
     }
+
+    /**main function draws the universe*/
     public static void main(String[] args) {
+        double time = 0;
         //0th and 1st command line arguments as doubles named T and dt. convert the strings to dfoubles
         //2nd command line argument is a string called filename
         //read in the planets and the universe radius from the file described by filename using your methods
         double T = Double.parseDouble(args[0]);
         double dt = Double.parseDouble(args[1]);
+        System.out.println(dt);
         String filename = args[2];
-        Planet[] Planets = readPlanets(filename);
+
         double R = readRadius(filename);
+        Planet[] Planets = readPlanets(filename);
 
         double x0 = 0;
         double x1 = R;
@@ -68,9 +74,12 @@ public class NBody {
         //draw image starfield.jpg as the bacgrkound
         StdDraw.enableDoubleBuffering();
 
-        double[] xForces= new double[Planets.length];
-        double[] yForces = new double[Planets.length];
-        for (double time = 0; time <= T; time = time + dt) {
+
+
+        while (time <= T) { //until time = T
+            double[] xForces= new double[Planets.length];
+            double[] yForces = new double[Planets.length];
+
             for(int i = 0; i < Planets.length; i++) {
                 yForces[i] = Planets[i].calcNetForceExertedByY(Planets);
                 xForces[i] = Planets[i].calcNetForceExertedByX(Planets);
@@ -88,7 +97,9 @@ public class NBody {
 
             StdDraw.show();
             StdDraw.pause(10);
+            time += dt;
         }
+
         StdOut.printf("%d\n", Planets.length);
         StdOut.printf("%.2e\n", R);
         for (int i = 0; i < Planets.length; i++) {
@@ -96,5 +107,6 @@ public class NBody {
                     Planets[i].xxPos, Planets[i].yyPos, Planets[i].xxVel,
                     Planets[i].yyVel, Planets[i].mass, Planets[i].imgFileName);
         }
+
     }
 }
