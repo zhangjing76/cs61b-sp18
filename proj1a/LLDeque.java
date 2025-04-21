@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 public class LLDeque<LochNess> {
     /** An SLList is a list, */
     private class StuffNode { //can be made private if we wanted
@@ -13,47 +15,44 @@ public class LLDeque<LochNess> {
 
 
     // The first item (if it exists) is  at sentinel.next
-    private StuffNode sentinel; //sentinel is a pointer node;   , points to StuffNode instance
-    private int size; //this variable belongs to SLList L.
+    private StuffNode sentinel;
+    private int size;
 
+    /**Constructor*/
     public LLDeque(LochNess x) {
-        sentinel = new StuffNode(null, null, sentinel.next); //sentinel is a pointer to the sentinel
-        sentinel.next = new StuffNode(x, null, sentinel); //first point to instance of StuffNode
+        sentinel = new StuffNode(null, null, null); //sentinel is a pointer to the sentinel
+        sentinel.next = new StuffNode(x, sentinel, sentinel); //first point to instance of StuffNode
+        sentinel.prev = sentinel.next;
         size = 1;
     }
     //L only has first as its data. it is not an StuffNode is it a SLList
 
     /**New empty SLList */
     public LLDeque() {
-        sentinel = new StuffNode(null, null, sentinel);
+        sentinel = new StuffNode(null, sentinel, sentinel);
         size = 0;
     }
 
     /** Adds x to the front of the list.  */
-    public void addFirst(LochNess x) {
-        sentinel.next = new StuffNode(x, sentinel.next, sentinel);
-        //first = new StuffNode(x, first);
-        size += 1;
-    }
-
-    /*
-    // Returns the first item in the list
-    public LochNess getFirst() { //can still use first because it is not a class, it is a method
-        return sentinel.next.item;
-    }
-    */
-
-    /** Adds an item to the end of the list.  */
-    public void addLast(LochNess x) {
-        StuffNode p = sentinel;
-        size += 1;
-
-        /* Move p until it reaches the end of the list*/
-        while (p.next != null){
-            p = p.next;
+    public void addFirst(LochNess x) { //what if there is no items in list
+        StuffNode newFirst = new StuffNode(x, sentinel.next, sentinel);
+        sentinel.next = newFirst;
+        if (size == 0) {
+            sentinel.prev = newFirst;
         }
+        else {
+            newFirst.next.prev = newFirst;
+        }
+        size += 1;
+    }
 
-        p.next = new StuffNode(x, sentinel, p);
+    /** Adds x to the end of the list.  */
+    public void addLast(LochNess x) {
+        StuffNode newLast = new StuffNode(x, sentinel, sentinel.prev);
+        newLast.prev.next = newLast;
+        sentinel.prev = newLast;
+
+        size+=1;
     }
 
     public boolean isEmpty() {
@@ -76,15 +75,22 @@ public class LLDeque<LochNess> {
         }
     }
 
-    public LochNess removeFirst {
+    public LochNess removeFirst() {
         if (sentinel.next == null) {
             return null;
+        } else if (sentinel.next.next == null){ //only 1 item in list
+            size -= 1;
+            LochNess prevFirst = sentinel.next.item;
+            sentinel.next = sentinel;
+            sentinel.prev = sentinel;
+            return prevFirst;
         } else {
-            LochNess prevFirst1 = sentinel.next.item;
-            sentinel.next.next.prev = sentinel;
-            sentinel.next = sentinel.next.next;
+            LochNess prevFirst = sentinel.next.item;
+            StuffNode newFirst = sentinel.next.next;
+            newFirst.prev = sentinel;
+            sentinel.next = newFirst;
             size = size-1;
-            return prevFirst1;
+            return prevFirst;
 
         }
     }
@@ -115,11 +121,28 @@ public class LLDeque<LochNess> {
         return p.item;
     }
 
+    /*
+    public LochNess getRecursive(int index) {
+        return getRecursiveImpl(sentinel.next, index);
+    }
+    private LochNess getRecursiveImpl(StuffNode p, int index) {
+        if (index == 0)
+            return p.item;
+
+        return gtRecursiveImpl(p.next, index - 1);
+    }
+     */
+
+    /*
+    * public LinkedListDeque() [create empty linked list]*/
 
     public static void main(String[] args) {
-        /* Creates a list of one integer, namely 10*/
-        LLDeque<String> s1 = new LLDeque<String>(); // L is an instance of SLList. it has variable first which points to node with 10 and a variable called size
-        s1.addLast("thugs");
-        System.out.println(s1.getFirst());
+        LLDeque<Integer> LinkedListDeque = new LLDeque<Integer>(5);
+        LinkedListDeque.addFirst(1);
+        LinkedListDeque.addFirst(2);
+        LinkedListDeque.addFirst(3);
+        LinkedListDeque.removeFirst();
+        LinkedListDeque.printDeque();
+
     }
 }
