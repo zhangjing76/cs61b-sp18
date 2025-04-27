@@ -27,7 +27,7 @@ public class LLDeque<LochNess> {
     }
     //L only has first as its data. it is not an StuffNode is it a SLList
 
-    /**New empty SLList */
+    /**New empty LLDeque (constructor) */
     public LLDeque() {
         sentinel = new StuffNode(null, sentinel, sentinel);
         size = 0;
@@ -55,6 +55,7 @@ public class LLDeque<LochNess> {
         size+=1;
     }
 
+    /**Checks is list is empty*/
     public boolean isEmpty() {
         if (size == 0) {
             return true;
@@ -63,10 +64,12 @@ public class LLDeque<LochNess> {
         }
     }
 
+    /**Prints size*/
     public int size() {
         return size;
     }
 
+    /**Prints entire Deque from front to back*/
     public void printDeque() {
         StuffNode p = sentinel.next;
         for (int i = 1; i <= size; i++) {
@@ -75,14 +78,15 @@ public class LLDeque<LochNess> {
         }
     }
 
+    /**Removes the first value of the list*/
     public LochNess removeFirst() {
         if (sentinel.next == null) {
             return null;
         } else if (sentinel.next.next == null){ //only 1 item in list
-            size -= 1;
             LochNess prevFirst = sentinel.next.item;
             sentinel.next = sentinel;
             sentinel.prev = sentinel;
+            size -= 1;
             return prevFirst;
         } else {
             LochNess prevFirst = sentinel.next.item;
@@ -95,21 +99,29 @@ public class LLDeque<LochNess> {
         }
     }
 
+    /** removes last value of list*/
     public LochNess removeLast() {
-        if (sentinel.prev == null) {
+        if (size == 0) {
             return null;
+        } else if (size == 1){
+            LochNess prevLast = sentinel.prev.item;
+            sentinel.next = sentinel;
+            sentinel.prev = sentinel;
+            size = 0;
+            return prevLast;
         } else {
             LochNess prevLast = sentinel.prev.item;
-            sentinel.prev.prev.next = sentinel; //new last points to sentinel as next
-            sentinel.prev = sentinel.prev.prev; //sentinel's previous now points to the new last
-            size = size-1;
+            sentinel.prev = sentinel.prev.prev;
+            sentinel.prev.next = sentinel;
+            size -= 1;
             return prevLast;
         }
     }
 
+    /**Gets item at index using recursion*/
     public LochNess get(int index) {
-        StuffNode p = sentinel.next;
-        if (index > size-1) {
+        StuffNode p = sentinel.next; //p is the first value
+        if (index > size-1 || index < 0) { //0 is first, 1 is next...
             return null;
         }
         if (index == 0) {
@@ -121,28 +133,21 @@ public class LLDeque<LochNess> {
         return p.item;
     }
 
-    /*
+    /**Gets item at index using recursion*/
     public LochNess getRecursive(int index) {
         return getRecursiveImpl(sentinel.next, index);
     }
+    /**Gets item at index */
     private LochNess getRecursiveImpl(StuffNode p, int index) {
-        if (index == 0)
+        if (index == 0) //base case - at desired index
             return p.item;
 
-        return gtRecursiveImpl(p.next, index - 1);
+        return getRecursiveImpl(p.next, index - 1);
     }
-     */
 
-    /*
-    * public LinkedListDeque() [create empty linked list]*/
-
-    public static void main(String[] args) {
-        LLDeque<Integer> LinkedListDeque = new LLDeque<Integer>(5);
-        LinkedListDeque.addFirst(1);
-        LinkedListDeque.addFirst(2);
-        LinkedListDeque.addFirst(3);
-        LinkedListDeque.removeFirst();
-        LinkedListDeque.printDeque();
-
+    /**Creates empty LLDeque*/
+    public void LinkedListDeque(){
+        sentinel = new StuffNode(null, sentinel, sentinel);
+        size = 0;
     }
 }
