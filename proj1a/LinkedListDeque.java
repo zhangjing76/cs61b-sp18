@@ -1,6 +1,4 @@
-import java.util.LinkedList;
-
-public class LLDeque<LochNess> {
+public class LinkedListDeque<LochNess> {
     /** An SLList is a list, */
     private class StuffNode { //can be made private if we wanted
         public LochNess item;
@@ -19,7 +17,7 @@ public class LLDeque<LochNess> {
     private int size;
 
     /**Constructor*/
-    public LLDeque(LochNess x) {
+    public LinkedListDeque(LochNess x) {
         sentinel = new StuffNode(null, null, null); //sentinel is a pointer to the sentinel
         sentinel.next = new StuffNode(x, sentinel, sentinel); //first point to instance of StuffNode
         sentinel.prev = sentinel.next;
@@ -27,8 +25,8 @@ public class LLDeque<LochNess> {
     }
     //L only has first as its data. it is not an StuffNode is it a SLList
 
-    /**New empty LLDeque (constructor) */
-    public LLDeque() {
+    /**New empty LinkedListDeque (constructor) */
+    public LinkedListDeque() {
         sentinel = new StuffNode(null, sentinel, sentinel);
         size = 0;
     }
@@ -145,7 +143,7 @@ public class LLDeque<LochNess> {
         return getRecursiveImpl(p.next, index - 1);
     }
 
-    /**Creates empty LLDeque*/
+    /**Creates empty LinkedListDeque*/
     public void LinkedListDeque(){
         sentinel = new StuffNode(null, sentinel, sentinel);
         size = 0;
