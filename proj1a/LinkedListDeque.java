@@ -1,10 +1,10 @@
-public class LinkedListDeque<LochNess> {
+public class LinkedListDeque<T> {
     /** An SLList is a list, */
     private class StuffNode { //can be made private if we wanted
-        public LochNess item;
+        public T item;
         public StuffNode next; //pointer to next element in list
         public StuffNode prev;
-        public StuffNode(LochNess i, StuffNode n, StuffNode p) { //constructor = how you start the ojbect
+        public StuffNode(T i, StuffNode n, StuffNode p) { //constructor = how you start the ojbect
             item = i;
             next = n;
             prev = p;
@@ -17,7 +17,7 @@ public class LinkedListDeque<LochNess> {
     private int size;
 
     /**Constructor*/
-    public LinkedListDeque(LochNess x) {
+    public LinkedListDeque(T x) {
         sentinel = new StuffNode(null, null, null); //sentinel is a pointer to the sentinel
         sentinel.next = new StuffNode(x, sentinel, sentinel); //first point to instance of StuffNode
         sentinel.prev = sentinel.next;
@@ -27,12 +27,14 @@ public class LinkedListDeque<LochNess> {
 
     /**New empty LinkedListDeque (constructor) */
     public LinkedListDeque() {
-        sentinel = new StuffNode(null, sentinel, sentinel);
+        sentinel = new StuffNode(null, null, null);
+        sentinel.next = sentinel;
+        sentinel.prev = sentinel;
         size = 0;
     }
 
     /** Adds x to the front of the list.  */
-    public void addFirst(LochNess x) { //what if there is no items in list
+    public void addFirst(T x) { //what if there is no items in list
         StuffNode newFirst = new StuffNode(x, sentinel.next, sentinel);
         sentinel.next = newFirst;
         if (size == 0) {
@@ -45,7 +47,7 @@ public class LinkedListDeque<LochNess> {
     }
 
     /** Adds x to the end of the list.  */
-    public void addLast(LochNess x) {
+    public void addLast(T x) {
         StuffNode newLast = new StuffNode(x, sentinel, sentinel.prev);
         newLast.prev.next = newLast;
         sentinel.prev = newLast;
@@ -77,17 +79,17 @@ public class LinkedListDeque<LochNess> {
     }
 
     /**Removes the first value of the list*/
-    public LochNess removeFirst() {
-        if (sentinel.next == null) {
+    public T removeFirst() {
+        if (size == 0) {
             return null;
-        } else if (sentinel.next.next == null){ //only 1 item in list
-            LochNess prevFirst = sentinel.next.item;
+        } else if (size == 1){ //only 1 item in list
+            T prevFirst = sentinel.next.item;
             sentinel.next = sentinel;
             sentinel.prev = sentinel;
             size -= 1;
             return prevFirst;
         } else {
-            LochNess prevFirst = sentinel.next.item;
+            T prevFirst = sentinel.next.item;
             StuffNode newFirst = sentinel.next.next;
             newFirst.prev = sentinel;
             sentinel.next = newFirst;
@@ -98,17 +100,17 @@ public class LinkedListDeque<LochNess> {
     }
 
     /** removes last value of list*/
-    public LochNess removeLast() {
+    public T removeLast() {
         if (size == 0) {
             return null;
         } else if (size == 1){
-            LochNess prevLast = sentinel.prev.item;
+            T prevLast = sentinel.prev.item;
             sentinel.next = sentinel;
             sentinel.prev = sentinel;
             size = 0;
             return prevLast;
         } else {
-            LochNess prevLast = sentinel.prev.item;
+            T prevLast = sentinel.prev.item;
             sentinel.prev = sentinel.prev.prev;
             sentinel.prev.next = sentinel;
             size -= 1;
@@ -117,7 +119,7 @@ public class LinkedListDeque<LochNess> {
     }
 
     /**Gets item at index using recursion*/
-    public LochNess get(int index) {
+    public T get(int index) {
         StuffNode p = sentinel.next; //p is the first value
         if (index > size-1 || index < 0) { //0 is first, 1 is next...
             return null;
@@ -132,20 +134,14 @@ public class LinkedListDeque<LochNess> {
     }
 
     /**Gets item at index using recursion*/
-    public LochNess getRecursive(int index) {
+    public T getRecursive(int index) {
         return getRecursiveImpl(sentinel.next, index);
     }
     /**Gets item at index */
-    private LochNess getRecursiveImpl(StuffNode p, int index) {
+    private T getRecursiveImpl(StuffNode p, int index) {
         if (index == 0) //base case - at desired index
             return p.item;
 
         return getRecursiveImpl(p.next, index - 1);
-    }
-
-    /**Creates empty LinkedListDeque*/
-    public void LinkedListDeque(){
-        sentinel = new StuffNode(null, sentinel, sentinel);
-        size = 0;
     }
 }

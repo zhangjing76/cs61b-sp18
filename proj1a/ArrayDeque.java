@@ -1,24 +1,24 @@
-public class ArrayDeque<LochNess> {
+public class ArrayDeque<T> {
     /** An ArrayDeque is a list. Non-circular */
     private int size;
-    private LochNess[] items;
+    private T[] items;
     private int RFACTOR = 2;
 
     /**Constructor*/
-    public ArrayDeque(LochNess x) {
-        items = (LochNess[]) new Object[8]; //creating generic arrays
+    public ArrayDeque(T x) {
+        items = (T[]) new Object[8]; //creating generic arrays
         items[0] = x;
         size = 1;
     }
 
-    /**New empty LLDeque (constructor) */
+    /**New empty LinkedListDeque (constructor) */
     public ArrayDeque() {
-        items = (LochNess[]) new Object[8];
+        items = (T[]) new Object[8];
         size = 0;
     }
 
     /** Adds x to the front of the list.  */
-    public void addFirst(LochNess x) { //what if there is no items in list
+    public void addFirst(T x) { //what if there is no items in list
         if (size == items.length){
             resize(items.length * RFACTOR);
         }
@@ -28,13 +28,13 @@ public class ArrayDeque<LochNess> {
     }
 
     private void resize(int newSize){
-        LochNess[] a = (LochNess[]) new Object[newSize]; //generic array
+        T[] a = (T[]) new Object[newSize]; //generic array
         System.arraycopy(items, 0, a, 0, size);
         items = a;
     }
 
     /** Adds x to the end of the list.  */
-    public void addLast(LochNess x) {
+    public void addLast(T x) {
         if (size == items.length){
             resize(items.length * RFACTOR);
         }
@@ -60,8 +60,11 @@ public class ArrayDeque<LochNess> {
     }
 
     /**Removes the first value of the list. Null out deleted items!*/
-    public LochNess removeFirst() {
-        LochNess prevFirst = items[0];
+    public T removeFirst() {
+        if (size == 0) {
+            return null;
+        }
+        T prevFirst = items[0];
         items[0] = null; //don't loiter
         size -= 1;
         System.arraycopy(items, 1, items, 0, size); //move everything to front again
@@ -70,15 +73,18 @@ public class ArrayDeque<LochNess> {
     }
 
     /** removes last value of list. Don't loiter!*/
-    public LochNess removeLast() {
-        LochNess prevLast = items[size-1];
+    public T removeLast() {
+        if (size == 0) {
+            return null;
+        }
+        T prevLast = items[size-1];
         items[size-1] = null; //don't loiter
         size -= 1;
         return prevLast;
     }
 
     /**Gets item at index using iteration*/
-    public LochNess get(int index) {
+    public T get(int index) {
         if (index >=0 && index <= size-1){
             return items[index];
         }
@@ -87,27 +93,4 @@ public class ArrayDeque<LochNess> {
         }
     }
 
-
-    /**Creates empty LLDeque*/
-    public void ArrayDeque(){
-        items = (LochNess[]) new Object[8];
-        size = 0;
-    }
-
-    public static void main(String[] args) {
-        System.out.println("Running tests.\n");
-        ArrayDeque<Integer> a = new ArrayDeque<>(5);
-        a.addFirst(2);
-        a.addFirst(3);
-        a.addLast(6);
-        a.addLast(7);
-        a.addLast(8);
-        a.addLast(9);
-        a.addLast(10);
-        a.addLast(11);
-        a.addFirst(1);
-        a.removeFirst();
-        a.removeLast(); //not printing last. need to null last one bc it moves up
-        a.printDeque();
-    }
 }
