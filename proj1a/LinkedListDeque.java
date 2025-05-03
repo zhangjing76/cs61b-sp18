@@ -16,18 +16,11 @@ public class LinkedListDeque<T> {
     private StuffNode sentinel;
     private int size;
 
-    /**Constructor*/
-    public LinkedListDeque(T x) {
-        sentinel = new StuffNode(null, null, null); //sentinel is a pointer to the sentinel
-        sentinel.next = new StuffNode(x, sentinel, sentinel); //first point to instance of StuffNode
-        sentinel.prev = sentinel.next;
-        size = 1;
-    }
     //L only has first as its data. it is not an StuffNode is it a SLList
 
     /**New empty LinkedListDeque (constructor) */
     public LinkedListDeque() {
-        sentinel = new StuffNode(null, null, null);
+        sentinel = new StuffNode(null, null, null); //next, prev can't be sentinel uet bc it doesnt exist
         sentinel.next = sentinel;
         sentinel.prev = sentinel;
         size = 0;

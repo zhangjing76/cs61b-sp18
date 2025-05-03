@@ -4,13 +4,6 @@ public class ArrayDeque<T> {
     private T[] items;
     private int RFACTOR = 2;
 
-    /**Constructor*/
-    public ArrayDeque(T x) {
-        items = (T[]) new Object[8]; //creating generic arrays
-        items[0] = x;
-        size = 1;
-    }
-
     /**New empty LinkedListDeque (constructor) */
     public ArrayDeque() {
         items = (T[]) new Object[8];
