@@ -87,8 +87,11 @@ public class ArrayDeque<T> {
             items[0] = x;
             end = 0;
         }
-        items[end + 1] = x; //works even if split
-        end += 1;
+        else {
+            items[end + 1] = x; //works even if split
+            end += 1;
+        }
+
         size+=1;
     }
 
@@ -166,5 +169,10 @@ public class ArrayDeque<T> {
         int desired;
         desired = (start+index+1)%items.length;
         return items[desired-1];
+    }
+
+    public static void main (String[]args){
+        ArrayDeque<Integer> L = new ArrayDeque();
+        System.out.println(L.isEmpty());
     }
 }
