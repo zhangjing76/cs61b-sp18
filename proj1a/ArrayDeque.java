@@ -19,18 +19,20 @@ public class ArrayDeque<T> {
         if (size == items.length){
             resize(items.length * RFACTOR);
         }
-        if (size == 0){
+        if (size == 0){ //nothing in it
             start = 0;
             items[0] = x;
             end = 0;
         }
         //addFirst and front pointer is at 0
-        else if (start == 0){ //what if there is something else at the end
-            items[items.length-1] = x; //start is at end of array now
+        else if (start == 0){
+            items[items.length-1] = x;
             //changing start
             start = items.length-1;
         }
-        else if (start > end){ //split
+        else if (start > end || items[0] == null){ //split and has values on both ends. or all at end together
+            //if items[0] is null, then everything must be at the end.
+            //all items must be next to each other (there are no gaps within the list)
             items[start - 1] = x;
             start -= 1;
         }
@@ -167,26 +169,11 @@ public class ArrayDeque<T> {
 
     /**Gets item at index using iteration*/
     public T get(int index){
-        if (index < 0 || index > size) {
+        if (index < 0 || index > size) { //if not possible
             return null;
         }
         int desired; //index starts from 0.
         desired = (start+index)%items.length;
         return items[desired];
-    }
-
-    public static void main (String[]args){
-        ArrayDeque<Integer> L = new ArrayDeque();
-        L.addLast(0);
-        L.addLast(1);
-        L.addLast(2);
-        L.addLast(3);
-        L.addLast(4);
-        L.addLast(5);
-        L.addLast(6);
-        L.addLast(7);
-        L.addLast(8);
-        L.get(8);
-
     }
 }
