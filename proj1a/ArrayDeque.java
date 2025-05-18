@@ -80,8 +80,10 @@ public class ArrayDeque<T> {
             items[0] = x;
             end = 0;
         }
-        else if (size == items.length){
+        else if (size == items.length){ //fixed.
             resize(items.length * RFACTOR);
+            items[size] = x;
+            end = size;
         }
         else if (end == items.length-1){
             items[0] = x;
@@ -164,9 +166,27 @@ public class ArrayDeque<T> {
     }
 
     /**Gets item at index using iteration*/
-    public T get(int index){ //fixed. implementation wrong before (should not be start + index + 1
-        int desired;
+    public T get(int index){
+        if (index < 0 || index > size) {
+            return null;
+        }
+        int desired; //index starts from 0.
         desired = (start+index)%items.length;
         return items[desired];
+    }
+
+    public static void main (String[]args){
+        ArrayDeque<Integer> L = new ArrayDeque();
+        L.addLast(0);
+        L.addLast(1);
+        L.addLast(2);
+        L.addLast(3);
+        L.addLast(4);
+        L.addLast(5);
+        L.addLast(6);
+        L.addLast(7);
+        L.addLast(8);
+        L.get(8);
+
     }
 }
