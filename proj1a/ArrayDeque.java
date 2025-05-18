@@ -46,7 +46,7 @@ public class ArrayDeque<T> {
     /**Resizes array if not long enough*/
     private void resize(int newSize){ //resizing sets everything back to normal. need to resizedown too
         T[] a = (T[]) new Object[newSize]; //generic array
-        if (start == 0){
+        if (start < end){
             System.arraycopy(items, start, a, 0, size);
         }
         else{
@@ -62,10 +62,11 @@ public class ArrayDeque<T> {
     /**Resizes array down if usage is less than 25%*/
     private void resizeDown(int newSize){
         T[] a = (T[]) new Object[newSize]; //generic array
-        if (start == 0 || end != items.length-1){ //together
+        if (start < end){ //together
+            //if the end is at the end, then the list must be together
             System.arraycopy(items, start, a, 0, size);
         }
-        else{
+        else{ //split
             System.arraycopy(items, start, a, 0, items.length-start); //
             System.arraycopy(items, 0, a, items.length-start, end+1); //copy separate end
         }
@@ -138,7 +139,7 @@ public class ArrayDeque<T> {
         T prevFirst = items[start];
         items[start] = null; //don't loiter
         size -=1;
-        if (start == items.length-1){
+        if (start == items.length-1){ //start at end
             start = 0;
         }
         else {
@@ -157,7 +158,7 @@ public class ArrayDeque<T> {
         }
         T prevLast = items[end];
         items[end] = null; //don't loiter
-        if (end == 0){
+        if (end == 0){ //end at start
             end = items.length-1;
         }
         else{
