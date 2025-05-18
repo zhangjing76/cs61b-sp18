@@ -77,7 +77,7 @@ public class ArrayDequeTest {
 		assertEquals(100, want);
 		L.removeLast(); //36
 		L.removeLast(); //none
-		assertEquals(true, L.isEmpty());
+        assertTrue(L.isEmpty());
 	}
 
 	@Test

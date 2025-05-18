@@ -124,7 +124,6 @@ public class ArrayDeque<T> {
 
     /**Removes the first value of the list. Null out deleted items!*/
     public T removeFirst(){
-        System.out.println((double) size/items.length);
         if ((double) size/items.length <= 0.25 && items.length >= 16){
             resizeDown((items.length+2)/4); //always round down (so we add 1)
         }
@@ -165,14 +164,9 @@ public class ArrayDeque<T> {
     }
 
     /**Gets item at index using iteration*/
-    public T get(int index){ //faulty/ how to make take constant time  if split?
+    public T get(int index){ //fixed. implementation wrong before (should not be start + index + 1
         int desired;
-        desired = (start+index+1)%items.length;
-        return items[desired-1];
-    }
-
-    public static void main (String[]args){
-        ArrayDeque<Integer> L = new ArrayDeque();
-        System.out.println(L.isEmpty());
+        desired = (start+index)%items.length;
+        return items[desired];
     }
 }
